@@ -1,6 +1,7 @@
 import { UnitType } from './buildSizeStringByUnit'
 import { CSSData, getCssDataForTag, TextCount } from './getCssDataForTag'
 import { isImageNode } from './utils/isImageNode'
+//@ts-ignore
 import { btoa as Govno } from './utils/govno.js'
 
 type Property = {

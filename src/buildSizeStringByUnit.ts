@@ -1,6 +1,6 @@
 export type UnitType = 'px' | 'rem' | 'remAs10px'
 
-export function buildSizeStringByUnit(pixelValue: number, type: UnitType): string {
+export function buildSizeStringByUnit(pixelValue: number | typeof mixed, type: UnitType): string {
   if (type === 'px') {
     return pixelValue + 'px'
   }
