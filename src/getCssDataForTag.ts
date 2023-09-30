@@ -119,7 +119,7 @@ export function getCssDataForTag(node: SceneNode, unitType: UnitType, textCount:
       properties.push({ name: 'height', value: Math.floor(node.height) + 'px' })
       properties.push({ name: 'width', value: Math.floor(node.width) + 'px' })
 
-      if ((node.fills as Paint[]).length > 0 && (node.fills as Paint[])[0].type !== 'IMAGE' && (node.fills as Paint[])[0].visible !== true) {
+      if ((node.fills as Paint[]).length > 0 && (node.fills as Paint[])[0].type !== 'IMAGE' && (node.fills as Paint[])[0].visible === true) {
         const paint = (node.fills as Paint[])[0]
         properties.push({ name: 'background-color', value: buildColorString(paint) })
       }
