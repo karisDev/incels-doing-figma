@@ -146,6 +146,7 @@ export function getCssDataForTag(node: SceneNode, unitType: UnitType, textCount:
       properties.push({ name: 'vertical-align', value: textVerticalAlignCssValues[node.textAlignVertical] })
       properties.push({ name: 'font-size', value: `${node.fontSize as number}px` })
       properties.push({ name: 'font-family', value: (node.fontName as FontName).family })
+      properties.push({ name: 'margin-block', value: '0px' })
 
       const letterSpacing = node.letterSpacing as LetterSpacing
       if (letterSpacing.value !== 0) {
