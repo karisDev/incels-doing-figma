@@ -1,0 +1,8 @@
+{
+  "name": "Figma to React Component",
+  "id": "959795830541939498",
+  "api": "1.0.0",
+  "main": "dist/code.js",
+  "ui": "dist/ui.html",
+  "editorType": ["figma"]
+}

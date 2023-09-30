@@ -1,0 +1,48 @@
+{
+  "name": "react-codegen",
+  "version": "1.0.0",
+  "description": "Your Figma plugin",
+  "main": "code.js",
+  "scripts": {
+    "dev": "webpack --mode=development --watch",
+    "build": "webpack --mode=production",
+    "prettier": "prettier --write",
+    "lint": "eslint 'src/**/*.{ts,tsx}'",
+    "lint:fix": "eslint 'src/**/*.{ts,tsx}' --fix",
+    "test": "jest"
+  },
+  "author": "",
+  "license": "",
+  "dependencies": {
+    "@vanilla-extract/css": "^1.0.0",
+    "html-webpack-inline-source-plugin": "0.0.10",
+    "html-webpack-plugin": "^3.2.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "webpack": "^4.41.4",
+    "webpack-cli": "^3.3.6"
+  },
+  "devDependencies": {
+    "@babel/core": "7.13.15",
+    "@babel/preset-env": "7.13.15",
+    "@babel/preset-typescript": "7.13.0",
+    "@figma/plugin-typings": "1.33.0",
+    "@types/jest": "26.0.24",
+    "@types/react": "17.0.36",
+    "@types/react-dom": "17.0.3",
+    "@typescript-eslint/eslint-plugin": "4.20.0",
+    "@typescript-eslint/parser": "4.20.0",
+    "babel-jest": "27.0.6",
+    "css-loader": "5.2.5",
+    "eslint": "7.23.0",
+    "eslint-config-prettier": "8.1.0",
+    "figma-api-stub": "0.0.48",
+    "jest": "27.0.6",
+    "prettier": "2.2.1",
+    "style-loader": "2.0.0",
+    "ts-loader": "8.0.17",
+    "ts-node": "9.1.1",
+    "typescript": "4.2.2",
+    "url-loader": "4.1.1"
+  }
+}
