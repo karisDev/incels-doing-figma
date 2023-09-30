@@ -1,6 +1,7 @@
 import { capitalizeFirstLetter } from './utils/stringUtils'
 import { Tag } from './buildTagTree'
 import { buildClassName } from './utils/cssUtils'
+import { camelback } from 'varname'
 
 type CssStyle = 'css' | 'styled-components'
 
@@ -41,7 +42,7 @@ function getTagName(tag: Tag, cssStyle: CssStyle) {
     }
     return guessTagName(tag.name)
   }
-  return tag.isText ? 'Text' : tag.name.replace(/\s/g, '')
+  return tag.isImg ? 'img' : `Styled.${camelback(tag.name)}`
 }
 
 function getClassName(tag: Tag, cssStyle: CssStyle) {
@@ -81,7 +82,7 @@ function buildJsxString(tag: Tag, cssStyle: CssStyle, level: number) {
 
   const openingTag = `${spaceString}<${tagName}${className}${properties}${hasChildren || tag.isText ? `` : ' /'}>`
   const childTags = buildChildTagsString(tag, cssStyle, level)
-  const closingTag = hasChildren || tag.isText ? `${!tag.isText ? '\n' + spaceString : ''}</${tagName}>` : ''
+  const closingTag = hasChildren || tag.isText ? `${tag.isText ? '' : '\n' + spaceString}</${tagName}>` : ''
 
   return openingTag + childTags + closingTag
 }

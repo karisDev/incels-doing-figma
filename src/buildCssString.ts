@@ -1,6 +1,7 @@
 import { CSSData } from './getCssDataForTag'
 import { Tag } from './buildTagTree'
 import { buildClassName } from './utils/cssUtils'
+import { camelback } from 'varname'
 
 export type CssStyle = 'css' | 'styled-components'
 
@@ -18,18 +19,24 @@ function buildArray(tag: Tag, arr: CSSData[]): CSSData[] {
 
 export function buildCssString(tag: Tag, cssStyle: CssStyle): string {
   const cssArray = buildArray(tag, [])
-  let codeStr = ''
+  let codeStr = cssStyle === 'styled-components' ? 'import styled from "styled-components"\n\n' : ''
 
   if (!cssArray) {
     return codeStr
   }
+
+  const usedClasses: string[] = []
   cssArray.forEach((cssData) => {
     if (!cssData || cssData.properties.length === 0) {
       return
     }
+    const className = camelback(cssData?.className)
+    if (usedClasses.includes(className)) return
+
+    usedClasses.push(className)
     const cssStr =
       cssStyle === 'styled-components'
-        ? `export const ${cssData?.className.replace(/\s/g, '')} = styled.div\`
+        ? `export const ${camelback(cssData?.className)} = styled.div\`
 ${cssData.properties.map((property) => `  ${property.name}: ${property.value};`).join('\n')}
 \`\n`
         : `.${buildClassName(cssData?.className)} {
