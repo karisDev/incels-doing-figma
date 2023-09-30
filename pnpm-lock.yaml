@@ -34,8 +34,8 @@ devDependencies:
     specifier: 7.13.0
     version: 7.13.0(@babel/core@7.13.15)
   '@figma/plugin-typings':
-    specifier: 1.33.0
-    version: 1.33.0
+    specifier: 1.78.1
+    version: 1.78.1
   '@types/jest':
     specifier: 26.0.24
     version: 26.0.24
@@ -64,8 +64,8 @@ devDependencies:
     specifier: 8.1.0
     version: 8.1.0(eslint@7.23.0)
   figma-api-stub:
-    specifier: 0.0.48
-    version: 0.0.48
+    specifier: 0.0.56
+    version: 0.0.56
   jest:
     specifier: 27.0.6
     version: 27.0.6(ts-node@9.1.1)
@@ -1235,8 +1235,8 @@ packages:
       - supports-color
     dev: true
 
-  /@figma/plugin-typings@1.33.0:
-    resolution: {integrity: sha512-k0YazDJqo5daYznnH+PKJJ32MGv8ftimFp1x+flH4k4lFwtH8UQ/tUGFBClZHDXZWX3rdr1GvUzhbUMdZhN3ug==}
+  /@figma/plugin-typings@1.78.1:
+    resolution: {integrity: sha512-bh5PJfmUv5R0PDfqCWLswjUkA0wwH8Z2jrTLSd8J5mL7KAZJHMHvTVwVHV8Jr7NLOvaVryEfeRMFMEY3pXuBAQ==}
     dev: true
 
   /@istanbuljs/load-nyc-config@1.1.0:
@@ -3474,8 +3474,8 @@ packages:
   /figgy-pudding@3.5.2:
     resolution: {integrity: sha512-0btnI/H8f2pavGMN8w40mlSKOfTK2SVJmBfBeVIj3kNw0swwgzyRq0d5TJVOwodFmtvpPeWPN/MCcfuWF0Ezbw==}
 
-  /figma-api-stub@0.0.48:
-    resolution: {integrity: sha512-/Uny+ZIHY9ln0cPPVFWGYsfdDZgJ8iXnOGGkamcjMYU7zijxHJbnfaG8496+XIgw61CdFwRZBuWqoQHLzYbKog==}
+  /figma-api-stub@0.0.56:
+    resolution: {integrity: sha512-tS4TC0mBky+OQPfv+IWyNWURvPBZ74LBSstHmoKgl+Nd8e1dbkKIURENy9AgViEnJqlt5Tqmv6/RYXFT/mmL5g==}
     dependencies:
       clone-deep: 4.0.1
       nanoid: 3.3.6

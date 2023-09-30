@@ -69,6 +69,22 @@ export function getCssDataForTag(node: SceneNode, unitType: UnitType, textCount:
         properties.push({ name: 'border-radius', value: borderRadiusValue })
       }
 
+      if (node.layoutSizingHorizontal === 'HUG') {
+        properties.push({ name: 'width', value: 'fit-content' })
+      } else if (node.layoutSizingHorizontal === 'FILL') {
+        properties.push({ name: 'width', value: '100%' })
+      } else {
+        properties.push({ name: 'width', value: Math.floor(node.width) + 'px' })
+      }
+
+      if (node.layoutSizingVertical === 'HUG') {
+        properties.push({ name: 'height', value: 'fit-content' })
+      } else if (node.layoutSizingVertical === 'FILL') {
+        properties.push({ name: 'height', value: '100%' })
+      } else {
+        properties.push({ name: 'height', value: Math.floor(node.height) + 'px' })
+      }
+
       if (node.layoutMode !== 'NONE') {
         properties.push({ name: 'display', value: 'flex' })
         properties.push({ name: 'flex-direction', value: node.layoutMode === 'HORIZONTAL' ? 'row' : 'column' })
@@ -84,7 +100,10 @@ export function getCssDataForTag(node: SceneNode, unitType: UnitType, textCount:
         } else {
           properties.push({
             name: 'padding',
-            value: `${buildSizeStringByUnit(node.paddingTop, unitType)} ${buildSizeStringByUnit(node.paddingRight, unitType)} ${buildSizeStringByUnit(node.paddingBottom, unitType)} ${buildSizeStringByUnit(node.paddingLeft, unitType)}`
+            value: `${buildSizeStringByUnit(node.paddingTop, unitType)} ${buildSizeStringByUnit(node.paddingRight, unitType)} ${buildSizeStringByUnit(
+              node.paddingBottom,
+              unitType
+            )} ${buildSizeStringByUnit(node.paddingLeft, unitType)}`
           })
         }
 
@@ -112,7 +131,6 @@ export function getCssDataForTag(node: SceneNode, unitType: UnitType, textCount:
       if (borderRadiusValue) {
         properties.push({ name: 'border-radius', value: borderRadiusValue })
       }
-
 
       if ((node.fills as Paint[]).length > 0 && (node.fills as Paint[])[0].type !== 'IMAGE' && (node.fills as Paint[])[0].visible === true) {
         const paint = (node.fills as Paint[])[0]
@@ -164,7 +182,7 @@ export function getCssDataForTag(node: SceneNode, unitType: UnitType, textCount:
             ? 'auto'
             : (node.letterSpacing as LetterSpacing).unit === 'PIXELS'
             ? buildSizeStringByUnit((node.lineHeight as LineHeightWithValue).value, unitType)
-              : (node.lineHeight as LineHeightWithValue).value + '%'
+            : (node.lineHeight as LineHeightWithValue).value + '%'
       })
 
       if (node.textDecoration === 'STRIKETHROUGH' || node.textDecoration === 'UNDERLINE') {
@@ -217,7 +235,10 @@ export function getCssDataForTag(node: SceneNode, unitType: UnitType, textCount:
 function getBorderRadiusString(node: FrameNode | RectangleNode | ComponentNode | InstanceNode, unitType: UnitType) {
   if (node.cornerRadius !== 0) {
     if (typeof node.cornerRadius !== 'number') {
-      return `${buildSizeStringByUnit(node.topLeftRadius, unitType)} ${buildSizeStringByUnit(node.topRightRadius, unitType)} ${buildSizeStringByUnit(node.bottomRightRadius, unitType)} ${buildSizeStringByUnit(node.bottomLeftRadius, unitType)}`
+      return `${buildSizeStringByUnit(node.topLeftRadius, unitType)} ${buildSizeStringByUnit(node.topRightRadius, unitType)} ${buildSizeStringByUnit(
+        node.bottomRightRadius,
+        unitType
+      )} ${buildSizeStringByUnit(node.bottomLeftRadius, unitType)}`
     }
     return `${buildSizeStringByUnit(node.cornerRadius, unitType)}`
   }
