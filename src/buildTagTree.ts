@@ -32,27 +32,18 @@ export async function buildTagTree(node: SceneNode, unitType: UnitType, textCoun
 
   const Uint8ToBase64 = (u8Arr: Uint8Array) => {
     const CHUNK_SIZE = 0x8000 // add numeric separators to the hex number
-    console.log('11')
     let index = 0
-    console.log('10')
     const length = u8Arr.length
-    console.log('9')
     let result = ''
-    console.log('8')
     let slice
-    console.log('7')
     while (index < length) {
-      console.log('6')
       slice = u8Arr.subarray(index, length > index + CHUNK_SIZE ? index + CHUNK_SIZE : length)
-      console.log('1')
+
       result += String.fromCharCode.apply(null, Array.from(slice))
-      console.log('2')
+
       index += CHUNK_SIZE
-      console.log('3')
     }
-    console.log('4')
     return Govno(result)
-    console.log('5')
   }
 
   if (isImg) {
