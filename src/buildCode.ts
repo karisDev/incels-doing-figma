@@ -1,7 +1,7 @@
 import { capitalizeFirstLetter } from './utils/stringUtils'
 import { Tag } from './buildTagTree'
 import { buildClassName } from './utils/cssUtils'
-import { camelback } from 'varname'
+import { camelcase } from 'varname'
 
 type CssStyle = 'css' | 'styled-components'
 
@@ -42,7 +42,9 @@ function getTagName(tag: Tag, cssStyle: CssStyle) {
     }
     return guessTagName(tag.name)
   }
-  return tag.isImg ? 'img' : `Styled.${camelback(tag.name)}`
+  if (tag.isImg) return 'img'
+  // if (tag.isText) return 'text'
+  return `Styled.${camelcase(tag.css.className)}`
 }
 
 function getClassName(tag: Tag, cssStyle: CssStyle) {

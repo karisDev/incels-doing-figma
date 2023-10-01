@@ -163,8 +163,8 @@ export function getCssDataForTag(node: SceneNode, unitType: UnitType, textCount:
     if (node.type === 'TEXT') {
       properties.push({ name: 'text-align', value: textAlignCssValues[node.textAlignHorizontal] })
       properties.push({ name: 'vertical-align', value: textVerticalAlignCssValues[node.textAlignVertical] })
-      properties.push({ name: 'font-size', value: `${node.fontSize as number}px` })
-      properties.push({ name: 'font-family', value: (node.fontName as FontName).family })
+      properties.push({ name: 'font-size', value: `${typeof node.fontSize === 'symbol' ? 24 : node.fontSize}px` })
+      properties.push({ name: 'font-family', value: typeof node.fontName === 'symbol' ? 'Arial' : node.fontName.family })
       properties.push({ name: 'margin-block', value: '0px' })
 
       const letterSpacing = node.letterSpacing as LetterSpacing
