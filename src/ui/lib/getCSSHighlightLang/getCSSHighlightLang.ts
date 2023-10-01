@@ -1,6 +1,6 @@
 import { CssStyle } from '../../../buildCssString';
 
-export const getCSSHighlightLang = (cssStyle: CssStyle) => {
+export const getCSSHighlightLang = (cssStyle: CssStyle): string => {
   switch (cssStyle) {
     case 'css':
       return 'css'

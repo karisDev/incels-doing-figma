@@ -2,7 +2,7 @@ import { UnitType } from './buildSizeStringByUnit'
 import { CSSData, getCssDataForTag, TextCount } from './getCssDataForTag'
 import { isImageNode } from './utils/isImageNode'
 //@ts-ignore
-import { btoa as Govno } from './utils/govno.js'
+import { btoa } from './utils/base64.ts'
 
 type Property = {
   name: string
@@ -31,7 +31,7 @@ export async function buildTagTree(node: SceneNode, unitType: UnitType, textCoun
   const properties: Property[] = []
 
   const Uint8ToBase64 = (u8Arr: Uint8Array) => {
-    const CHUNK_SIZE = 0x8000 // add numeric separators to the hex number
+    const CHUNK_SIZE = 0x8000
     let index = 0
     const length = u8Arr.length
     let result = ''
@@ -43,7 +43,7 @@ export async function buildTagTree(node: SceneNode, unitType: UnitType, textCoun
 
       index += CHUNK_SIZE
     }
-    return Govno(result)
+    return btoa(result)
   }
 
   if (isImg) {

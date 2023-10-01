@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, FC, ElementRef } from 'react'
+import React, { useEffect, useState, FC } from 'react'
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import ReactDOM from "react-dom/client";
 import codeTheme from 'react-syntax-highlighter/dist/esm/styles/hljs/night-owl';
@@ -7,14 +7,11 @@ import { messageTypes } from './messagesTypes'
 import { RiFolderDownloadLine, RiFileCopyFill } from 'react-icons/ri'
 import styles from './ui.css'
 import Spacer from './ui/Spacer'
-import { Button, NextUIProvider, Radio } from '@nextui-org/react';
-import cssIcon from './ui/assets/icons/css.svg'
-import scIcon from './ui/assets/icons/sc.svg'
-
-const cssStyles: { value: CssStyle; label: string; img: string }[] = [
-  { value: 'css', label: 'CSS', img: cssIcon },
-  { value: 'styled-components', label: 'styled-components', img: scIcon }
-]
+import { Button, NextUIProvider, Loading } from '@nextui-org/react';
+import { copy, download, getCSSHighlightLang } from './ui/lib';
+import { cssStyles } from './ui/constants/cssStyles';
+import { getCompiledCode } from './ui/lib/api';
+import { downloadProject } from './ui/lib/api/downloadProject/downloadProject';
 
 const App: FC = () => {
   const [code, setCode] = useState('')
@@ -22,18 +19,25 @@ const App: FC = () => {
   const [page, setPage] = useState<'code' | 'css'>('code')
   const [selectedCssStyle, setCssStyle] = useState<CssStyle>('css')
   const [downloading, setDownloading] = useState(false);
+  const [isCopied, setIsCopied] = useState(false)
 
   const copyToClipboard = () => {
-    const textArea = document.createElement("textarea");
-    textArea.value = page === "code" ? code : css;
-    document.body.appendChild(textArea);
-    textArea.select();
-    document.execCommand('copy');
-    document.body.removeChild(textArea);
+    copy(page === "code" ? code : css)
+    setIsCopied(true)
 
     const msg: messageTypes = { type: 'notify-copy-success' }
     parent.postMessage(msg, '*')
   }
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setIsCopied(false)
+    }, 1000)
+
+    return () => {
+      clearInterval(timeout)
+    }
+  }, [isCopied])
 
   const notifyChangeCssStyle = (event: React.ChangeEvent<HTMLInputElement>) => {
     const msg: messageTypes = { type: 'new-css-style-set', cssStyle: event.target.value as CssStyle }
@@ -46,28 +50,17 @@ const App: FC = () => {
 
     const base64 = btoa(encodeURIComponent(code + "\n\n" + css));
 
-    const result = await fetch("https://usetech.onixx.ru/compile/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        data: base64,
-        style: selectedCssStyle === "styled-components" ? "styled" : "css",
-      }),
-    });
+    const result = await getCompiledCode({
+      data: base64,
+      style: selectedCssStyle === "styled-components" ? "styled" : "css",
+    })
     const { uuid } = await result.json();
 
-    const file = await fetch(`https://usetech.onixx.ru/download/${uuid}`);
+    const file = await downloadProject({ uuid });
     const blob = await file.blob();
     const url = window.URL.createObjectURL(blob);
 
-    const link = document.createElement("a");
-
-    link.href = url;
-    link.download = "project.zip";
-    link.click();
-    link.remove();
+    download(url, 'project', 'zip')
 
     setDownloading(false);
   }
@@ -93,15 +86,17 @@ const App: FC = () => {
 
           <Spacer axis="vertical" size={12} />
 
-            <SyntaxHighlighter className={styles.codeHighlighter} language={page === "code" || selectedCssStyle === "styled-components" ? "javascript" : "css"} style={codeTheme}>
+            <SyntaxHighlighter className={styles.codeHighlighter} language={page === 'code' ? 'JavaScript' : getCSSHighlightLang(selectedCssStyle)} style={codeTheme}>
               {page === "code" ? code : css}
             </SyntaxHighlighter>
 
           <Spacer axis="vertical" size={12} />
 
           <div className={styles.buttons}>
-            <Button onClick={copyToClipboard} color="primary" bordered icon={<RiFileCopyFill />}>Скопировать</Button>
-            <Button disabled={downloading} onClick={handleDownloadProject} color="primary" icon={<RiFolderDownloadLine />}>Скачать код</Button>
+            <Button onClick={copyToClipboard} color={isCopied ? 'success' : 'primary'} bordered icon={<RiFileCopyFill />}>{isCopied ? 'Скопировано' : 'Скопировать'}</Button>
+            <Button disabled={downloading} onClick={handleDownloadProject} color="primary" icon={<RiFolderDownloadLine />}>
+              {downloading ? <Loading color="primary" size="md" /> : 'Скачать код'}
+            </Button>
           </div>
         </div>
         <div className={styles.settings}>
