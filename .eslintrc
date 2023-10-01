@@ -1,7 +1,6 @@
 {
-  "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended", "prettier"],
-  "plugins": ["@typescript-eslint"],
-  "rules": {
-    "@typescript-eslint/explicit-module-boundary-types": "off"
-  }
+  "extends": ["eslint:recommended", "plugin:react/recommended", "prettier"],
+  "parser": "babel-eslint",
+  "plugins": [],
+  "rules": {}
 }
