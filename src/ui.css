@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 * {
   font-family: sans-serif;
   box-sizing: border-box;
@@ -23,6 +27,7 @@ input {
 
 .codeHighlighter {
   border-radius: 16px;
+  max-height: 250px;
 }
 
 .buttons {
@@ -85,4 +90,12 @@ code {
   background: var(--nextui-colors-primary);
   box-shadow: 0px 4px 48px 0px var(--nextui-colors-primary);
   color: white;
+}
+
+.radioGroup {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 2px;
 }
